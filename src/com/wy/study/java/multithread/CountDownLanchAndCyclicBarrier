@@ -1,0 +1,24 @@
+# CountDownLanch和CyclicBarrier的比较
+
+## CountDownLanch的原理
+   * 查看源码不难发现，CountDownLanch底层实现了自己的同步器sny
+   * CountDownLanch的所有提供的方法基本都是直接使用的同步器sny提供的方法
+   * CountDownLanch可以看作是同步器sny的一种适配器，是sny的一种简单运用
+    
+        ### countDownLanch内部同步器深入解析
+        * 同步机制并非加锁等待，而是巧妙地使用无限自旋等待。等待的条件是计数器state变量变为0（countdown方法会修改计数器）或者是线程中断
+        * 解锁的顺序是从等待队列中的节点顺序一个一个的释放，也就是说countDownLanch解锁其实是有序的
+    
+## CyclicBarrier的原理
+   * 查看源码，CyclicBarrier实质上是重入锁ReentrantLock的一种简单运用
+   * CyclicBarrier通过自定义的Generation类和计算算法，来控制循环等待
+    
+## 两者的比较
+   * CountDownLanch是同步器的直接使用，在闭锁的控制上是一次性的
+   * CyclicBarrier是重入锁ReentrantLock的简单运用，重点在与可重复使用
+   * 两者共同存在的问题，实际上就是同步器的问题，计算器的处理容易出现问题，导致程序无限等待或者同步出现混乱
+    
+    
+
+    
+

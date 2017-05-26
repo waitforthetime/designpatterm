@@ -1,7 +1,10 @@
 package com.wy.study.java.multithread;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.locks.LockSupport;
 
 /**
  * Created by wy_ms on 2017/05/08.
@@ -11,8 +14,16 @@ public class CountDownLanchDemo {
     public static void main(String[] args) {
 
 //        normalTest(10);
-        Mytest(10);
+//        Mytest(10);
+        LockSupport.unpark(Thread.currentThread());
+    }
 
+    static class L<T> extends ArrayList<T> {
+
+        @Override
+        public void removeRange(int fromIndex, int toIndex) {
+            super.removeRange(fromIndex, toIndex);
+        }
     }
 
     public static void Mytest(int count) {
